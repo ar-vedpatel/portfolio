@@ -333,3 +333,4 @@ header{position:sticky;top:0;z-index:100;background:var(--bg)}html{scroll-paddin
 #about-content #expertise .mixed-tools .tool-list li{max-width:none;min-width:0;padding:4px 0;gap:8px}
 #about-content #expertise .mixed-tools .tool-list img{width:62px;height:62px}
 @media(max-width:650px){#about-content #expertise .mixed-tools .tool-list{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 8px}#about-content #expertise .mixed-tools .tool-list img{width:52px;height:52px}}
+.project-description{white-space:pre-line}.project-description[hidden]{display:none}
