@@ -28,6 +28,7 @@ jobs:
           node --check assets/js/script.js
           node --check assets/js/projects.js
           node --check assets/js/project.js
+          node --check assets/js/motion.js
           test -s project.html
           test -s assets/downloads/portfolio-placeholder.pdf
           test -s assets/css/style.css
