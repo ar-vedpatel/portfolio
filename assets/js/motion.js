@@ -4,7 +4,12 @@
 
   // Progressive enhancement: content stays visible if observers are unavailable.
   if (!('IntersectionObserver' in window)) return;
-  const targets = document.querySelectorAll('.intro, .hero, .section-heading, .card, .about > div, .contact, .project-images img');
+  const targets = document.querySelectorAll('.intro:not(.about-intro), .hero, .section-heading, .card, .about > div, .contact, .project-images img, .about-intro > *, .about-profile figure, .about-profile > div > *, .resume-section > div:first-child, .background-items > article, .tool-groups > div, .tool-list > li');
+  document.querySelectorAll('.about-intro, .about-profile > div, .tool-groups, .tool-list').forEach(group => {
+    Array.from(group.children).forEach((child,index) => {
+      child.style.setProperty('--reveal-delay',`${Math.min(index*80,320)}ms`);
+    });
+  });
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;

@@ -2,7 +2,7 @@ name: Deploy portfolio to GitHub Pages
 on:
   push:
     branches: [master, main]
-    paths: ['index.html', 'project.html', 'assets/**', '.github/workflows/deploy-pages.yml']
+    paths: ['index.html', 'project.html', 'about.html', 'assets/**', '.github/workflows/deploy-pages.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -29,11 +29,13 @@ jobs:
           node --check assets/js/projects.js
           node --check assets/js/project.js
           node --check assets/js/motion.js
+          node --check assets/js/navigation.js
+          test -s about.html
           test -s project.html
           test -s assets/downloads/portfolio-placeholder.pdf
           test -s assets/css/style.css
           mkdir -p _site
-          cp index.html project.html _site/
+          cp index.html project.html about.html _site/
           cp -R assets _site/assets
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

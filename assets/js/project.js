@@ -4,11 +4,11 @@ const rawId=new URLSearchParams(location.search).get('id');
 const id=Number(rawId);
 const details=document.querySelector('#project-details');
 if(!rawId||!Number.isInteger(id)||id<1||id>PROJECTS.length){
-  document.title='Project not found | FORM';
+  document.title='Project not found | Ved Patel';
   details.innerHTML='<h1>Project not found.</h1><p>Please choose a project from the portfolio.</p>';
 }else{
   const i=id-1,project=PROJECTS[i];
-  document.title=`${titles[i]} | FORM`;
+  document.title=`${titles[i]} | Ved Patel`;
   document.querySelector('.project-back').href=`index.html#project-${id}`;
   details.innerHTML=`<section class="project-introduction" aria-labelledby="project-title"><div class="project-introduction-text"><p class="eyebrow">${categories[i]} / PROJECT ${String(id).padStart(2,'0')} OF ${PROJECTS.length}</p><h1 id="project-title">${titles[i]}</h1><dl class="project-metadata"><div><dt>Location</dt><dd id="project-location"></dd></div></dl><p class="project-description">Add the design concept and your role here.</p></div><img class="project-cover" id="image-1" src="${project.cover}" alt="${titles[i]}, project cover" fetchpriority="high" decoding="async"></section><div class="project-images">${project.images.slice(1).map((src,n)=>`<img id="image-${n+2}" src="${src}" alt="${titles[i]}, view ${n+2}" loading="lazy" decoding="async">`).join('')}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id>1?`<a href="project.html?id=${id-1}">← Previous project</a>`:'<a href="index.html#projects">All projects</a>'}${id<PROJECTS.length?`<a href="project.html?id=${id+1}">Next project →</a>`:'<a href="index.html#projects">All projects →</a>'}</div>`;
   document.querySelector('#project-location').textContent=project.location||'Location to be added';
