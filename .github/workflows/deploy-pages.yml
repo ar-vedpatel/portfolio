@@ -1,0 +1,41 @@
+name: Deploy portfolio to GitHub Pages
+on:
+  push:
+    branches: [master, main]
+    paths: ['index.html', 'assets/**', '.github/workflows/deploy-pages.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate and prepare website
+        run: |
+          node --check assets/js/script.js
+          node --check assets/js/projects.js
+          test -s assets/downloads/portfolio-placeholder.pdf
+          test -s assets/css/style.css
+          mkdir -p _site
+          cp index.html _site/
+          cp -R assets _site/assets
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
