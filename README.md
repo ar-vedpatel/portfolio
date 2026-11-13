@@ -11,13 +11,13 @@ assets/css/style.css   Responsive styles
 assets/js/script.js    Interactions and placeholder project names
 assets/js/projects.js  Image manifest for the 13 project galleries
 assets/js/project.js   Project detail rendering and navigation
-assets/img/01...13/    Your existing images, used directly
+assets/img/01_Name...13_Name/    Your existing images, used directly
 assets/downloads/      Downloadable placeholder portfolio PDF
 ```
 
-The layout supports laptops, tablets, and phones. Project cards open a separate detail page in the same tab, with a back link and previous/next project navigation. Includes category filters, mobile navigation, and reduced-motion preferences. Branding, biography, project titles, categories, and email are placeholders. Replace the PDF in `assets/downloads` with your final portfolio when ready.
+The layout supports laptops, tablets, and phones. Project cards open a separate detail page in the same tab, with a back link and previous/next project navigation. Includes category filters, mobile navigation, and reduced-motion preferences. Project titles use the image folder names, with numeric prefixes removed and underscores displayed as spaces. Branding, biography, categories, and email are placeholders. Replace the PDF in `assets/downloads` with your final portfolio when ready.
 
-Replacing existing images updates the site directly. Adding or renaming images requires updating `assets/js/projects.js`.
+Replacing existing images updates the site directly. Adding or renaming images or project folders requires updating `assets/js/projects.js`, which stores titles, cover paths, and gallery paths.
 
 ## GitHub Pages
 

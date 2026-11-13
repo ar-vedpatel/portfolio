@@ -1,4 +1,4 @@
-const titles=['The Vertical City','Light & Volume','A Quiet Dialogue','Between the Lines','Material Matters','The Garden Pavilion','Courtyard Living','Framed Perspectives','An Open Threshold','Collective Ground','Rhythm & Repetition','Urban Mosaic','Beyond the Horizon'];
+const titles=PROJECTS.map(project=>project.title);
 const categories=['Urban','Residential','Spaces','Residential','Spaces','Residential','Residential','Spaces','Spaces','Urban','Urban','Urban','Residential'];
 const rawId=new URLSearchParams(location.search).get('id');
 const id=Number(rawId);
@@ -10,7 +10,49 @@ if(!rawId||!Number.isInteger(id)||id<1||id>PROJECTS.length){
   const i=id-1,project=PROJECTS[i];
   document.title=`${titles[i]} | FORM`;
   document.querySelector('.project-back').href=`index.html#project-${id}`;
-  details.innerHTML=`<p class="eyebrow">${categories[i]} / PROJECT ${String(id).padStart(2,'0')} OF ${PROJECTS.length}</p><h1>${titles[i]}</h1><p class="project-description">Placeholder project title and description. Add the location, year, design concept, and your role here.</p><div class="project-images">${project.images.map((src,n)=>`<img src="${src}" alt="${titles[i]}, view ${n+1}" ${n===0?'fetchpriority="high"':'loading="lazy"'} decoding="async">`).join('')}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id>1?`<a href="project.html?id=${id-1}">← Previous project</a>`:'<a href="index.html#projects">All projects</a>'}${id<PROJECTS.length?`<a href="project.html?id=${id+1}">Next project →</a>`:'<a href="index.html#projects">All projects →</a>'}</div>`;
+  details.innerHTML=`<section class="project-introduction" aria-labelledby="project-title"><div class="project-introduction-text"><p class="eyebrow">${categories[i]} / PROJECT ${String(id).padStart(2,'0')} OF ${PROJECTS.length}</p><h1 id="project-title">${titles[i]}</h1><dl class="project-metadata"><div><dt>Location</dt><dd id="project-location"></dd></div></dl><p class="project-description">Add the design concept and your role here.</p></div><img class="project-cover" id="image-1" src="${project.cover}" alt="${titles[i]}, project cover" fetchpriority="high" decoding="async"></section><div class="project-images">${project.images.slice(1).map((src,n)=>`<img id="image-${n+2}" src="${src}" alt="${titles[i]}, view ${n+2}" loading="lazy" decoding="async">`).join('')}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id>1?`<a href="project.html?id=${id-1}">← Previous project</a>`:'<a href="index.html#projects">All projects</a>'}${id<PROJECTS.length?`<a href="project.html?id=${id+1}">Next project →</a>`:'<a href="index.html#projects">All projects →</a>'}</div>`;
+  document.querySelector('#project-location').textContent=project.location||'Location to be added';
+  const imageGallery=details.querySelector('.project-images');
+  const galleryImages=Array.from(imageGallery.querySelectorAll('img'));
+  const imageNav=document.createElement('div');
+  imageNav.className='image-navigator';
+  imageNav.setAttribute('role','navigation');
+  imageNav.setAttribute('aria-label','Project images');
+  imageNav.innerHTML=`<div class="image-nav-heading"><span>Project images</span><span class="image-nav-count" aria-live="polite">1 / ${galleryImages.length}</span></div><div class="image-thumbnails">${galleryImages.map((image,n)=>{return `<a href="#${image.id}" aria-label="Go to image ${n+1} of ${galleryImages.length}" ${n===0?'aria-current="true"':''}><img src="${project.images[n+1]}" alt="" loading="lazy" decoding="async"><span>${String(n+1).padStart(2,'0')}</span></a>`}).join('')}</div>`;
+  const galleryLayout=document.createElement('div');
+  galleryLayout.className='project-gallery-layout';
+  imageGallery.before(galleryLayout);
+  galleryLayout.append(imageGallery,imageNav);
+  const thumbnailLinks=Array.from(imageNav.querySelectorAll('a'));
+  thumbnailLinks.forEach((link,index)=>link.addEventListener('click',event=>{
+    event.preventDefault();
+    const headerHeight=document.querySelector('header').getBoundingClientRect().height;
+    const top=window.scrollY+galleryImages[index].getBoundingClientRect().top-headerHeight-12;
+    window.scrollTo({top,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    history.replaceState(null,'',`#image-${index+1}`);
+  }));
+  function fitImageNavigator(){
+    imageNav.classList.remove('two-columns');
+    const available=window.innerHeight-parseFloat(getComputedStyle(imageNav).top)-16;
+    if(imageNav.getBoundingClientRect().height>available)imageNav.classList.add('two-columns');
+  }
+  window.addEventListener('resize',fitImageNavigator);
+  requestAnimationFrame(fitImageNavigator);
+  let activeImage=-1;
+  function updateImageNavigation(){
+    const navBottom=document.querySelector('header').getBoundingClientRect().bottom;
+    let active=0;
+    galleryImages.forEach((image,n)=>{if(image.getBoundingClientRect().top<=navBottom+40)active=n});
+    if(active===activeImage)return;
+    activeImage=active;
+    thumbnailLinks.forEach((link,n)=>{if(n===active)link.setAttribute('aria-current','true');else link.removeAttribute('aria-current')});
+    imageNav.querySelector('.image-nav-count').textContent=`${active+1} / ${galleryImages.length}`;
+  }
+  let navigationFrame;
+  window.addEventListener('scroll',()=>{if(navigationFrame)return;navigationFrame=requestAnimationFrame(()=>{navigationFrame=null;updateImageNavigation()})},{passive:true});
+  window.addEventListener('resize',updateImageNavigation);
+  galleryImages.forEach(image=>image.addEventListener('load',updateImageNavigation));
+  requestAnimationFrame(updateImageNavigation);
   const related=PROJECTS.map((item,index)=>({item,index})).filter(entry=>entry.index!==i).sort((a,b)=>Number(categories[b.index]===categories[i])-Number(categories[a.index]===categories[i])).slice(0,6);
   const section=document.createElement('section');
   section.className='related-projects';

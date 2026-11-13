@@ -82,3 +82,62 @@ header .brand span{font-size:8px;letter-spacing:1.2px;margin-top:5px}
 }
 /* Keep navigation visible while scrolling. */
 header{position:sticky;top:0;z-index:100;background:var(--bg)}html{scroll-padding-top:100px}@media(max-width:650px){html{scroll-padding-top:90px}}
+
+/* Progressive translucent blur at the carousel edges; centre stays clear. */
+.related-viewport{position:relative;isolation:isolate}
+.related-viewport::before,.related-viewport::after{content:'';position:absolute;top:0;bottom:0;width:30%;z-index:2;pointer-events:none;background:rgba(245,244,239,.32);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.related-viewport::before{left:0;-webkit-mask-image:linear-gradient(to right,#000,transparent);mask-image:linear-gradient(to right,#000,transparent)}
+.related-viewport::after{right:0;-webkit-mask-image:linear-gradient(to left,#000,transparent);mask-image:linear-gradient(to left,#000,transparent)}
+.related-track .related-card.is-side .card-image{filter:none;opacity:1}
+.related-track .related-card.is-side .card-heading,.related-track .related-card.is-side>p{opacity:.8}
+.related-viewport:focus-within::before,.related-viewport:focus-within::after{pointer-events:none}
+@media(max-width:650px){.related-viewport::before,.related-viewport::after{width:22%;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}}
+/* Blur neighbouring tiles while preserving the sharp centre. */
+.related-track .related-card.is-side .card-image{filter:blur(3px);opacity:.7}
+.related-track .related-card.is-centered .card-image,.related-track .related-card:focus-visible .card-image{filter:none;opacity:1}
+@media(max-width:650px){.related-track .related-card.is-side .card-image{filter:blur(2px)}.related-track .related-card.is-centered .card-image,.related-track .related-card:focus-visible .card-image{filter:none}}
+/* Compact sticky thumbnails make long image galleries easy to navigate. */
+.image-navigator{position:sticky;top:72px;z-index:10;background:var(--bg);border-block:1px solid var(--line);padding:10px 0 8px;margin-bottom:24px}
+.image-nav-heading{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px;margin-bottom:8px;color:var(--muted)}
+.image-thumbnails{display:flex;gap:8px;overflow-x:auto;padding:3px 2px 7px;scrollbar-width:thin}
+.image-thumbnails a{position:relative;flex:0 0 62px;height:45px;opacity:.55;border:2px solid transparent;border-radius:3px;overflow:hidden}
+.image-thumbnails img{display:block;width:100%;height:100%;object-fit:cover}
+.image-thumbnails a>span{position:absolute;bottom:0;right:0;padding:2px 4px;background:#20251dcc;color:white;font-size:8px}
+.image-thumbnails a[aria-current=true],.image-thumbnails a:hover,.image-thumbnails a:focus-visible{opacity:1;border-color:var(--ink)}
+.project-images img{scroll-margin-top:195px}
+@media(max-width:650px){.image-navigator{top:66px;margin-bottom:16px}.image-thumbnails a{flex-basis:56px;height:44px}.project-images img{scroll-margin-top:185px}}
+@media(prefers-reduced-motion:no-preference){.image-thumbnails a{transition:opacity 200ms ease,border-color 200ms ease}}
+/* Vertical image navigation alongside the right edge of the gallery. */
+.project-gallery-layout{display:grid;grid-template-columns:minmax(0,1fr) 80px;gap:24px;align-items:start}
+.project-gallery-layout .project-images{min-width:0}
+.image-navigator{top:90px;width:80px;margin:0;padding:10px 6px;border:1px solid var(--line);border-radius:5px;max-height:calc(100dvh - 115px)}
+.image-nav-heading{flex-direction:column;align-items:center;gap:5px;font-size:9px;letter-spacing:0;text-align:center;margin-bottom:8px}
+.image-thumbnails{flex-direction:column;overflow-x:hidden;overflow-y:auto;max-height:calc(100dvh - 185px);padding:3px;gap:7px}
+.image-thumbnails a{flex:0 0 46px;width:100%;height:46px;min-height:46px}
+.project-images img{scroll-margin-top:100px}
+@media(max-width:650px){.project-gallery-layout{grid-template-columns:minmax(0,1fr) 48px;gap:10px}.image-navigator{top:80px;width:48px;padding:7px 3px;max-height:calc(100dvh - 100px)}.image-nav-heading{font-size:8px}.image-nav-heading>span:first-child{font-size:0}.image-nav-heading>span:first-child::after{content:'Images';font-size:8px}.image-thumbnails{padding:2px;max-height:calc(100dvh - 163px);gap:6px}.image-thumbnails a{flex-basis:44px;min-height:44px;height:44px}.project-images img{scroll-margin-top:90px}}
+/* The document is the only scroll area; thumbnails flow beside the gallery. */
+.project-gallery-layout .image-navigator{position:static;max-height:none;align-self:start}
+.project-gallery-layout .image-thumbnails{overflow:visible;max-height:none;padding-bottom:3px;scrollbar-width:none}
+/* Sticky right-side navigation with no independent scrolling. */
+.project-gallery-layout .image-navigator{position:sticky;top:90px;align-self:start;max-height:none}.project-gallery-layout .image-thumbnails{overflow:visible;max-height:none}@media(max-width:650px){.project-gallery-layout .image-navigator{top:80px}}
+
+/* Expand the image navigator into two columns when height is limited. */
+.project-gallery-layout{grid-template-columns:minmax(0,1fr) auto}
+.project-gallery-layout .image-thumbnails{display:grid;grid-template-columns:1fr;gap:7px}
+.project-gallery-layout .image-navigator.two-columns{width:148px}
+.project-gallery-layout .image-navigator.two-columns .image-thumbnails{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:650px){.project-gallery-layout .image-navigator.two-columns{width:90px}.project-gallery-layout .image-thumbnails{gap:6px}}
+/* Hide the image navigator on phones and give the gallery full width. */
+@media(max-width:650px){.project-gallery-layout{grid-template-columns:minmax(0,1fr)}.project-gallery-layout .image-navigator{display:none}}
+
+/* Project introduction: information left, first image as the cover right. */
+.project-introduction{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,80px);align-items:center;margin-bottom:55px}
+.project-introduction-text{min-width:0}
+.project-introduction h1{font-size:clamp(36px,4.4vw,68px);line-height:1.1;margin:24px 0 30px;overflow-wrap:anywhere}
+.project-cover{display:block;width:100%;height:auto;scroll-margin-top:100px}
+.project-metadata{margin:0 0 24px;padding-top:20px;border-top:1px solid var(--line)}
+.project-metadata dt{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.project-metadata dd{font-size:14px;margin:0;line-height:1.6}
+.project-introduction .project-description{margin-bottom:0}
+@media(max-width:650px){.project-introduction{grid-template-columns:minmax(0,1fr);gap:25px;margin-bottom:25px}.project-introduction h1{font-size:40px;margin:20px 0 25px}.project-cover{scroll-margin-top:90px}}
