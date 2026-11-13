@@ -6,14 +6,16 @@ All website resources live strictly in `assets`:
 
 ```text
 index.html             Website entry page
+project.html           Project detail page (same tab, selected by ?id=1...13)
 assets/css/style.css   Responsive styles
 assets/js/script.js    Interactions and placeholder project names
 assets/js/projects.js  Image manifest for the 13 project galleries
+assets/js/project.js   Project detail rendering and navigation
 assets/img/01...13/    Your existing images, used directly
 assets/downloads/      Downloadable placeholder portfolio PDF
 ```
 
-The layout supports laptops, tablets, and phones. Includes category filters, accessible modal galleries, mobile navigation, and reduced-motion preferences. Branding, biography, project titles, categories, and email are placeholders. Replace the PDF in `assets/downloads` with your final portfolio when ready.
+The layout supports laptops, tablets, and phones. Project cards open a separate detail page in the same tab, with a back link and previous/next project navigation. Includes category filters, mobile navigation, and reduced-motion preferences. Branding, biography, project titles, categories, and email are placeholders. Replace the PDF in `assets/downloads` with your final portfolio when ready.
 
 Replacing existing images updates the site directly. Adding or renaming images requires updating `assets/js/projects.js`.
 
