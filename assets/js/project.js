@@ -1,7 +1,7 @@
 const titles = PROJECTS.map((project) => project.title);
 const categories = [
   "Urban",
-  "Residential",
+  "Other",
   "Spaces",
   "Residential",
   "Spaces",
@@ -26,7 +26,7 @@ if (!rawId || !Number.isInteger(id) || id < 1 || id > PROJECTS.length) {
     project = PROJECTS[i];
   document.title = `${titles[i]} | Ved Patel`;
   document.querySelector(".project-back").href = `index.html#project-${id}`;
-  details.innerHTML = `<section class="project-introduction" aria-labelledby="project-title"><div class="project-introduction-text"><p class="eyebrow">${categories[i]} / PROJECT ${String(id).padStart(2, "0")} OF ${PROJECTS.length}</p><h1 id="project-title">${titles[i]}</h1><dl class="project-metadata"><div><dt>Location</dt><dd id="project-location"></dd></div></dl><p class="project-description"></p></div><img class="project-cover" id="image-1" src="${project.cover}" alt="${titles[i]}, project cover" fetchpriority="high" decoding="async"></section><div class="project-images">${project.images
+  details.innerHTML = `<section class="project-introduction" aria-labelledby="project-title"><div class="project-introduction-text"><p class="eyebrow">${categories[i]} / PROJECT ${String(id).padStart(2, "0")} OF ${PROJECTS.length}</p><h1 id="project-title">${titles[i]}</h1><dl class="project-metadata"><div><dt>Location</dt><dd id="project-location"></dd></div><div><dt>Program</dt><dd id="project-program"></dd></div></dl><p class="project-description"></p></div><img class="project-cover" id="image-1" src="${project.cover}" alt="${titles[i]}, project cover" fetchpriority="high" decoding="async"></section><div class="project-images">${project.images
     .slice(1)
     .map(
       (src, n) =>
@@ -37,6 +37,8 @@ if (!rawId || !Number.isInteger(id) || id < 1 || id > PROJECTS.length) {
     )}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id > 1 ? `<a href="project.html?id=${id - 1}">Previous project</a>` : '<a href="index.html#projects">All projects</a>'}${id < PROJECTS.length ? `<a href="project.html?id=${id + 1}">Next project</a>` : '<a href="index.html#projects">All projects</a>'}</div>`;
   document.querySelector("#project-location").textContent =
     project.location || "Location to be added";
+  document.querySelector("#project-program").textContent =
+    project.program || "Program to be added";
   const description = details.querySelector(".project-description");
   description.textContent = typeof project.description === "string" ? project.description : "";
   description.hidden = !description.textContent.trim();

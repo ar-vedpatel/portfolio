@@ -334,3 +334,5 @@ header{position:sticky;top:0;z-index:100;background:var(--bg)}html{scroll-paddin
 #about-content #expertise .mixed-tools .tool-list img{width:62px;height:62px}
 @media(max-width:650px){#about-content #expertise .mixed-tools .tool-list{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 8px}#about-content #expertise .mixed-tools .tool-list img{width:52px;height:52px}}
 .project-description{white-space:pre-line}.project-description[hidden]{display:none}
+
+.project-metadata{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.project-metadata dd{overflow-wrap:anywhere}@media(max-width:400px){.project-metadata{grid-template-columns:1fr;gap:16px}}
