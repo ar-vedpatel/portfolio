@@ -1,19 +1,5 @@
 const titles = PROJECTS.map((project) => project.title);
-const categories = [
-  "Urban",
-  "Other",
-  "Spaces",
-  "Residential",
-  "Spaces",
-  "Residential",
-  "Residential",
-  "Spaces",
-  "Spaces",
-  "Urban",
-  "Urban",
-  "Urban",
-  "Residential",
-];
+const categories = PROJECTS.map((project) => project.category || "Others");
 const rawId = new URLSearchParams(location.search).get("id");
 const id = Number(rawId);
 const details = document.querySelector("#project-details");

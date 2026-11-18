@@ -1,19 +1,5 @@
 const titles = PROJECTS.map((project) => project.title);
-const categories = [
-  "Urban",
-  "Residential",
-  "Spaces",
-  "Residential",
-  "Spaces",
-  "Residential",
-  "Residential",
-  "Spaces",
-  "Spaces",
-  "Urban",
-  "Urban",
-  "Urban",
-  "Residential",
-];
+const categories = PROJECTS.map((project) => project.category || "Others");
 const grid = document.querySelector("#project-grid");
 function showProjects(filter = "All") {
   grid.replaceChildren();
@@ -27,16 +13,24 @@ function showProjects(filter = "All") {
     grid.append(card);
   });
 }
-document.querySelectorAll("[data-filter]").forEach(
-  (button) =>
-    (button.onclick = () => {
-      document.querySelectorAll("[data-filter]").forEach((b) => {
-        b.classList.toggle("active", b === button);
-        b.setAttribute("aria-pressed", String(b === button));
-      });
-      showProjects(button.dataset.filter);
-    }),
-);
+const filters = document.querySelector(".filters");
+filters.replaceChildren();
+["All", ...new Set(categories)].forEach((category) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.dataset.filter = category;
+  button.textContent = category === "All" ? "All projects" : category;
+  button.classList.toggle("active", category === "All");
+  button.setAttribute("aria-pressed", String(category === "All"));
+  button.addEventListener("click", () => {
+    filters.querySelectorAll("button").forEach((item) => {
+      item.classList.toggle("active", item === button);
+      item.setAttribute("aria-pressed", String(item === button));
+    });
+    showProjects(category);
+  });
+  filters.append(button);
+});
 const menu = document.querySelector("#menu"),
   nav = document.querySelector("#navigation");
 function closeMenu() {
