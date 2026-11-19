@@ -22,12 +22,13 @@
       <nav id="navigation" aria-label="Main navigation">
         <a href="index.html#projects">Projects</a
         ><a href="about.html" aria-current="page">About Me</a
-        ><a
-          class="download"
-          href="assets/downloads/portfolio-placeholder.pdf"
-          download
-          >Download</a
-        >
+        ><details class="download-dropdown">
+          <summary class="download">Download</summary>
+          <div class="download-options">
+            <a href="assets/downloads/Resume_Ved_Patel.pdf" download>Resume <span>PDF</span></a>
+            <a href="assets/downloads/Portfolio_Ved_Patel.pdf" download>Portfolio <span>PDF</span></a>
+          </div>
+        </details>
       </nav>
     </header>
     <main id="about-content" class="about-redesign">
@@ -381,5 +382,6 @@
     </footer> -->
     <script src="assets/js/navigation.js"></script>
     <script src="assets/js/motion.js"></script>
+    <script src="assets/js/downloads.js"></script>
   </body>
 </html>

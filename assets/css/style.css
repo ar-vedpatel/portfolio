@@ -336,3 +336,15 @@ header{position:sticky;top:0;z-index:100;background:var(--bg)}html{scroll-paddin
 .project-description{white-space:pre-line}.project-description[hidden]{display:none}
 
 .project-metadata{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.project-metadata dd{overflow-wrap:anywhere}@media(max-width:400px){.project-metadata{grid-template-columns:1fr;gap:16px}}
+
+/* Download choices, isolated from the main navigation layout. */
+#navigation .download-dropdown{position:relative;font-size:12px;flex-shrink:0}
+#navigation .download-dropdown summary{display:flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;list-style:none;cursor:pointer;border:1px solid var(--ink);background:transparent}
+#navigation .download-dropdown summary::-webkit-details-marker{display:none}
+#navigation .download-dropdown summary:focus-visible{outline:2px solid #697e4a;outline-offset:4px}
+#navigation .download-dropdown[open] summary{background:var(--ink);color:var(--bg)}
+#navigation .download-options{position:absolute;top:calc(100% + 8px);right:0;min-width:200px;background:var(--bg);border:1px solid var(--line);border-radius:3px;box-shadow:0 10px 25px #262b2414;padding:6px;z-index:110}
+#navigation .download-options a{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding:10px 12px;font-size:13px}
+#navigation .download-options a:hover,#navigation .download-options a:focus-visible{background:var(--green)}
+#navigation .download-options span{font-size:9px;letter-spacing:1px;color:var(--muted)}
+@media(max-width:650px){#navigation .download-dropdown summary{min-height:44px}#navigation .download-options{position:static;min-width:0;margin-top:7px;box-shadow:none}}

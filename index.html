@@ -19,18 +19,19 @@
       </button>
       <nav id="navigation" aria-label="Main navigation">
         <a href="#projects">Projects</a><a href="about.html">About Me</a
-        ><a
-          class="download"
-          href="assets/downloads/portfolio-placeholder.pdf"
-          download
-          >Download</a
-        >
+        ><details class="download-dropdown">
+          <summary class="download">Download</summary>
+          <div class="download-options">
+            <a href="assets/downloads/Resume_Ved_Patel.pdf" download>Resume <span>PDF</span></a>
+            <a href="assets/downloads/Portfolio_Ved_Patel.pdf" download>Portfolio <span>PDF</span></a>
+          </div>
+        </details>
       </nav>
     </header>
     <main id="home">
       <section class="intro">
         <!-- <p class="eyebrow">GRADUATE OF ARCHITECTURE</p> -->
-        <h1>Exploring architecture through a <em>curated lens.</em></h1>
+        <h1>Exploring architecture <br/>through a <em>curated lens.</em></h1>
         <div class="intro-row">
           <p style="font-size: 20px;">
             Collection of my academic, freelance, and professional work.
@@ -94,5 +95,6 @@
     <script src="assets/js/projects.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/motion.js"></script>
+    <script src="assets/js/downloads.js"></script>
   </body>
 </html>

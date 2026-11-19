@@ -30,9 +30,11 @@ jobs:
           node --check assets/js/project.js
           node --check assets/js/motion.js
           node --check assets/js/navigation.js
+          node --check assets/js/downloads.js
           test -s about.html
           test -s project.html
-          test -s assets/downloads/portfolio-placeholder.pdf
+          test -s assets/downloads/Resume_Ved_Patel.pdf
+          test -s assets/downloads/Portfolio_Ved_Patel.pdf
           test -s assets/css/style.css
           mkdir -p _site
           cp index.html project.html about.html _site/
