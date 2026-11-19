@@ -31,25 +31,4 @@ filters.replaceChildren();
   });
   filters.append(button);
 });
-const menu = document.querySelector("#menu"),
-  nav = document.querySelector("#navigation");
-function closeMenu() {
-  nav.classList.remove("open");
-  menu.setAttribute("aria-expanded", "false");
-  menu.textContent = "Menu +";
-}
-menu.onclick = () => {
-  const open = menu.getAttribute("aria-expanded") !== "true";
-  nav.classList.toggle("open", open);
-  menu.setAttribute("aria-expanded", String(open));
-  menu.textContent = open ? "Close −" : "Menu +";
-};
-nav
-  .querySelectorAll("a")
-  .forEach((a) => a.addEventListener("click", closeMenu));
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeMenu();
-  }
-});
 showProjects();

@@ -20,7 +20,7 @@ if (!rawId || !Number.isInteger(id) || id < 1 || id > PROJECTS.length) {
     )
     .join(
       "",
-    )}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id > 1 ? `<a href="project.html?id=${id - 1}">Previous project</a>` : '<a href="index.html#projects">All projects</a>'}${id < PROJECTS.length ? `<a href="project.html?id=${id + 1}">Next project</a>` : '<a href="index.html#projects">All projects</a>'}</div>`;
+    )}</div><div class="project-pagination" role="navigation" aria-label="Project navigation"></div>`;
   const pagination = details.querySelector(".project-pagination");
   pagination.replaceChildren();
   function addProjectLink(projectIndex, label, alignment) {
@@ -267,22 +267,3 @@ if (!rawId || !Number.isInteger(id) || id < 1 || id > PROJECTS.length) {
   window.addEventListener("resize", measureTrack);
   requestAnimationFrame(measureTrack);
 }
-const menu = document.querySelector("#menu"),
-  navigation = document.querySelector("#navigation");
-function closeMenu() {
-  navigation.classList.remove("open");
-  menu.setAttribute("aria-expanded", "false");
-  menu.textContent = "Menu +";
-}
-menu.onclick = () => {
-  const open = menu.getAttribute("aria-expanded") !== "true";
-  navigation.classList.toggle("open", open);
-  menu.setAttribute("aria-expanded", String(open));
-  menu.textContent = open ? "Close −" : "Menu +";
-};
-navigation
-  .querySelectorAll("a")
-  .forEach((a) => a.addEventListener("click", closeMenu));
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeMenu();
-});
