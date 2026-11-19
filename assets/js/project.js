@@ -21,6 +21,24 @@ if (!rawId || !Number.isInteger(id) || id < 1 || id > PROJECTS.length) {
     .join(
       "",
     )}</div><div class="project-pagination" role="navigation" aria-label="Project navigation">${id > 1 ? `<a href="project.html?id=${id - 1}">Previous project</a>` : '<a href="index.html#projects">All projects</a>'}${id < PROJECTS.length ? `<a href="project.html?id=${id + 1}">Next project</a>` : '<a href="index.html#projects">All projects</a>'}</div>`;
+  const pagination = details.querySelector(".project-pagination");
+  pagination.replaceChildren();
+  function addProjectLink(projectIndex, label, alignment) {
+    const link = document.createElement("a");
+    link.className = `project-pagination-link ${alignment}`;
+    const neighbour = PROJECTS[projectIndex];
+    link.href = neighbour ? `project.html?id=${projectIndex + 1}` : "index.html#projects";
+    const caption = document.createElement("span");
+    caption.className = "pagination-label";
+    caption.textContent = neighbour ? label : "Back to portfolio";
+    const name = document.createElement("span");
+    name.className = "pagination-name";
+    name.textContent = neighbour ? neighbour.title : "All projects";
+    link.append(caption, name);
+    pagination.append(link);
+  }
+  addProjectLink(i - 1, "Previous project", "previous");
+  addProjectLink(i + 1, "Next project", "next");
   document.querySelector("#project-location").textContent =
     project.location || "Location to be added";
   document.querySelector("#project-program").textContent =
